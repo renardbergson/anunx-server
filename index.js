@@ -6,8 +6,8 @@ const routes = require('./src/routes/routes')
 // environment
 require('dotenv').config({path: './.env.local'})
 
-// body parser
-
+// cors
+app.use(cors())
 
 // routes
 app.use('/', routes)

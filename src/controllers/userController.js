@@ -21,7 +21,7 @@ async function newUser (req, res) {
 
   await user.save()
 
-  res.send({success: true})
+  res.status(201).send({success: true})
 }
 
 async function signIn (req, res) {
@@ -30,13 +30,13 @@ async function signIn (req, res) {
   const user = await userModel.findOne({ email })
 
   if (!user) {
-    return res.send({success: false, message: 'invalid'})
+    return res.status(401).send({success: false, message: 'invalid'})
   }
 
   const passIsCorrect = await compare(password, user.password)
 
   if (!passIsCorrect) {
-    return res.send({success: false, message: 'invalid'})
+    return res.status(401).send({success: false, message: 'invalid'})
   }
   
   res.json({
