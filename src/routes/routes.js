@@ -15,6 +15,7 @@ router.post('/users/new', express.json() ,userController.newUser)
 router.post('/users/signIn', express.json(), userController.signIn)
 
 // products
+router.get('/products/getAds/:userID?', productController.getAds)
 router.post('/products/new', productController.newProduct)
 
 module.exports = router

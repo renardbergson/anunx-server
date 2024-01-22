@@ -79,6 +79,22 @@ async function newProduct (req, res) {
   })
 }
 
+async function getAds (req, res) {
+  const {userID} = req.params
+
+  const obj = userID ? {'user.id' : userID} : null
+
+  const products = await productModel.find(obj)
+
+  if (products) {
+    res.status(200).send(products)
+  } else {
+    res.status(500).send({success: false})
+  }
+
+}
+
 module.exports = {
-  newProduct
+  newProduct,
+  getAds,
 }
