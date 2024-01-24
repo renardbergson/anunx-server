@@ -94,7 +94,20 @@ async function getAds (req, res) {
 
 }
 
+async function removeAd (req, res) {
+  const {productID} = req.body
+
+  const remove = await productModel.findByIdAndDelete(productID)
+
+  if (remove) {
+    res.status(200).send({success: true})
+  } else {
+    res.status(400).send({success: false})
+  }
+}
+
 module.exports = {
   newProduct,
   getAds,
+  removeAd,
 }
