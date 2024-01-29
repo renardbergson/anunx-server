@@ -3,6 +3,21 @@ const formidable = require('formidable-serverless')
 const path = require('path')
 const fs = require('fs')
 
+async function ads (req, res) {
+  const {productID} = req.params
+
+  const obj = productID ? {_id: productID} : null
+
+  const search = await productModel.find(obj)
+  // obg is null ? so, we search an array, else we search only an object
+
+  if (search) {
+    res.status(200).send(search)
+  } else {
+    res.status(400).send({success: false})
+  }
+}
+
 async function newProduct (req, res) {
   const form = new formidable.IncomingForm({
     multiples: true,
@@ -79,19 +94,16 @@ async function newProduct (req, res) {
   })
 }
 
-async function getAds (req, res) {
+async function myAds (req, res) {
   const {userID} = req.params
 
-  const obj = userID ? {'user.id' : userID} : null
-
-  const products = await productModel.find(obj)
+  const products = await productModel.find({'user.id' : userID})
 
   if (products) {
     res.status(200).send(products)
   } else {
     res.status(500).send({success: false})
   }
-
 }
 
 async function removeAd (req, res) {
@@ -107,7 +119,8 @@ async function removeAd (req, res) {
 }
 
 module.exports = {
+  ads,
   newProduct,
-  getAds,
+  myAds,
   removeAd,
 }
