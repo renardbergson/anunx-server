@@ -17,6 +17,7 @@ router.post('/users/signIn', express.json(), userController.signIn)
 // products
 router.get('/products/ads/:productID?', productController.ads)
 router.get('/products/myAds/:userID', productController.myAds)
+router.get('/products/highlights', productController.highlights)
 router.post('/products/new', productController.newProduct)
 router.delete('/products/remove', express.json(), productController.removeAd)
 

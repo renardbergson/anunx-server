@@ -18,6 +18,14 @@ async function ads (req, res) {
   }
 }
 
+async function highlights (req, res) {
+  const products = await productModel.aggregate([{
+    $sample: {size: 6}
+  }])
+
+  res.send(products)
+}
+
 async function newProduct (req, res) {
   const form = new formidable.IncomingForm({
     multiples: true,
@@ -120,6 +128,7 @@ async function removeAd (req, res) {
 
 module.exports = {
   ads,
+  highlights,
   newProduct,
   myAds,
   removeAd,
