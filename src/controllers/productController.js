@@ -23,7 +23,36 @@ async function highlights (req, res) {
     $sample: {size: 6}
   }])
 
-  res.send(products)
+  res.status(200).send(products)
+}
+
+async function search (req, res) {
+  const {data} = req.params
+
+  const search = await productModel.find({
+    $or: [
+      {
+        title: {
+          $regex: data,
+          $options: 'i'
+        }
+      },
+      {
+        description: {
+          $regex: data,
+          $options: 'i'
+        }
+      },
+      {
+        category: {
+          $regex: data,
+          $options: 'i'
+        }
+      }
+    ]
+  })
+
+  res.status(200).send(search)
 }
 
 async function newProduct (req, res) {
@@ -129,6 +158,7 @@ async function removeAd (req, res) {
 module.exports = {
   ads,
   highlights,
+  search,
   newProduct,
   myAds,
   removeAd,
